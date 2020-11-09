@@ -1,0 +1,78 @@
+{
+    "common": {
+        "name": "google-smart-home-fulfillment",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "Google Smart Home Fulfillment",
+        "titleLang": {
+            "en": "Google Smart Home Fulfillment",
+            "de": "Google Smart Home-Erfüllung",
+            "ru": "Выполнение Google Smart Home",
+            "pt": "Cumprimento de casa inteligente do Google",
+            "nl": "Google Smart Home-vervulling",
+            "fr": "Google Smart Home Fulfillment",
+            "it": "Gestione di Google Smart Home",
+            "es": "Cumplimiento de Google Smart Home",
+            "pl": "Realizacja Google Smart Home",
+            "zh-cn": "Google智能家居的实现"
+        },
+        "desc": {
+            "en": "A Google Smart Home Actions fulfillment server for ioBroker.",
+            "de": "Ein Fulfillment-Server für Google Smart Home-Aktionen für ioBroker.",
+            "ru": "Сервер выполнения Google Smart Home Actions для ioBroker.",
+            "pt": "Um servidor de execução do Google Smart Home Actions para ioBroker.",
+            "nl": "Een Google Smart Home Actions-uitvoeringsserver voor ioBroker.",
+            "fr": "Un serveur d'exécution des actions Google Smart Home pour ioBroker.",
+            "it": "Un server di adempimento Google Smart Home Actions per ioBroker.",
+            "es": "Un servidor de cumplimiento de Google Smart Home Actions para ioBroker.",
+            "pl": "Serwer realizacji działań Google Smart Home dla ioBroker.",
+            "zh-cn": "用于ioBroker的Google Smart Home Actions履行服务器。"
+        },
+        "authors": [
+            "Robin Rainton <robin@rainton.com>"
+        ],
+        "keywords": [
+            "Google Home",
+            "Google Assistant",
+            "voice"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "google-smart-home-fulfillment.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/raintonr/ioBroker.google-smart-home-fulfillment/master/admin/google-smart-home-fulfillment.png",
+        "readme": "https://github.com/raintonr/ioBroker.google-smart-home-fulfillment/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "iot-systems",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "push",
+        "materialize": true,
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            }
+        ]
+    },
+    "native": {
+        "option1": true,
+        "option2": "42"
+    },
+    "objects": [],
+    "instanceObjects": []
+}

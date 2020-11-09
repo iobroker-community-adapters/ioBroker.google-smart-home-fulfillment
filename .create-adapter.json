@@ -1,0 +1,39 @@
+{
+    "cli": true,
+    "adapterName": "google-smart-home-fulfillment",
+    "title": "Google Smart Home Fulfillment",
+    "description": "A Google Smart Home Actions fulfillment server for ioBroker.",
+    "keywords": [
+        "Google Home",
+        "Google Assistant",
+        "voice"
+    ],
+    "expert": "no",
+    "features": [
+        "adapter"
+    ],
+    "adminFeatures": [],
+    "type": "iot-systems",
+    "startMode": "daemon",
+    "connectionType": "local",
+    "dataSource": "push",
+    "connectionIndicator": "no",
+    "language": "JavaScript",
+    "adminReact": "no",
+    "tools": [
+        "ESLint",
+        "type checking"
+    ],
+    "indentation": "Space (4)",
+    "quotes": "single",
+    "es6class": "yes",
+    "authorName": "Robin Rainton",
+    "authorGithub": "raintonr",
+    "authorEmail": "robin@rainton.com",
+    "gitRemoteProtocol": "HTTPS",
+    "gitCommit": "no",
+    "license": "MIT License",
+    "ci": "gh-actions",
+    "dependabot": "no",
+    "creatorVersion": "1.30.1"
+}
