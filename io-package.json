@@ -57,7 +57,7 @@
         "extIcon": "https://raw.githubusercontent.com/raintonr/ioBroker.google-smart-home-fulfillment/master/admin/google-smart-home-fulfillment.png",
         "readme": "https://github.com/raintonr/ioBroker.google-smart-home-fulfillment/blob/master/README.md",
         "loglevel": "info",
-        "mode": "daemon",
+        "mode": "extension",
         "type": "iot-systems",
         "compact": true,
         "connectionType": "local",
@@ -67,9 +67,11 @@
             {
                 "js-controller": ">=2.0.0"
             }
-        ]
+        ],
+        "webExtension": "lib/googleSmartHomeFulfillment.js"
     },
     "native": {
+        "webInstance": "*",
         "option1": true,
         "option2": "42"
     },
