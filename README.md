@@ -14,7 +14,16 @@
 
 ## google-smart-home-fulfillment adapter for ioBroker
 
-A Google Smart Home Actions fulfillment server for ioBroker.
+Adapter for ioBroker to implement a Google Smart Home Actions fulfillment server.
+
+To use this adapter you will need to:
+
+- Make sure there is a HTTPS server running within the ioBroker installation. Use [ioBroker.web](https://github.com/ioBroker/ioBroker.web) for this purpose.
+
+- Visit the [Actions on Google Console](https://console.actions.google.com/).
+-- Create a project that will be specifically used to communicate with this adapter instance. The project should be left in testing mode and not published.
+
+TODO: and much more...
 
 ## Developer manual
 This section is intended for the developer. It can be deleted later
