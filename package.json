@@ -18,6 +18,7 @@
     "url": "https://github.com/raintonr/ioBroker.google-smart-home-fulfillment"
   },
   "dependencies": {
+    "await-semaphore": "*",
     "actions-on-google": "*",
     "@iobroker/adapter-core": "^2.4.0",
     "oidc-provider": "*",
