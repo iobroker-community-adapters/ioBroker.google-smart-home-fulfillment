@@ -48,7 +48,7 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
 
         // Slightly odd require here but this is so the main code is compatible with possible
         // use as an ioBroker.web extension (well - that's how it started out anyhow).
-        require('./lib/googleSmartHomeFulfillment.js')(server, {secure: true, port: this.config.port}, this, this.config, app);
+        require('./lib/googleSmartHomeFulfillment.js')(server, { secure: true, port: this.config.port }, this, this.config, app);
     }
 
     /**
