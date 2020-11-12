@@ -71,7 +71,6 @@
         "webExtension": "lib/googleSmartHomeFulfillment.js"
     },
     "native": {
-        "redirect_uri": "https://oauth-redirect.googleusercontent.com/r/maison-harmonis-feb5a",
         "option2": "42"
     },
     "objects": [],
