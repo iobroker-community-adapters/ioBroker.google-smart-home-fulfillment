@@ -23,7 +23,8 @@
     "@iobroker/adapter-core": "^2.4.0",
     "oidc-provider": "*",
     "jose": "*",
-    "randomstring": "*"
+    "randomstring": "*",
+    "set-interval-async": "*"
   },
   "devDependencies": {
     "@iobroker/testing": "^2.3.0",
