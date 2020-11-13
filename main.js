@@ -39,12 +39,9 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
         const express = require('express');
         const https = require('https');
         const app = express();
-        const credentials = {
-            key: this.config.privateKey,
-            cert: this.config.certificate,
-            ca: this.config.chain
-        };
-        const server = https.createServer(credentials, app).listen(this.config.port);
+
+        const certificates = await this.getCertificatesAsync(this.config.certPublic, this.config.certPrivate, this.config.certChained);
+        const server = https.createServer(certificates[0], app).listen(this.config.port);
 
         // Slightly odd require here but this is so the main code is compatible with possible
         // use as an ioBroker.web extension (well - that's how it started out anyhow).
