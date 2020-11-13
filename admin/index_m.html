@@ -79,10 +79,10 @@
         <div class="row">
             <div class="col s12 m3 input-field">
                 <input class="value" id="port" size="5" maxlength="5" type="number" />
-                <label class="translate" for="port">Secure HTTPS Port:</label>
+                <label class="translate" for="port">Secure HTTPS Port</label>
             </div>
             <div class="col s12 m6 input-field">
-                <input class="value" id="publicFQDN" />
+                <input type="text" class="value" id="publicFQDN" />
                 <label class="translate" for="publicFQDN">Public FQDN</label>
                 <span class="translate">Your public FQDN or IP address. Requests to port 443 on this address must be received by this Adapter, on the HTTPS port configured here. Usually achieved through port forwarding/firewall configuration.</span>
             </div>
@@ -91,22 +91,22 @@
         <div class="row">
             <div class="col s12 m3 input-field">
                 <select id="certPublic" class="value"></select>
-                <label class="translate" for="certPublic">Public certificate:</label>
+                <label class="translate" for="certPublic">Public certificate</label>
             </div>
             <div class="col s12 m3 input-field">
                 <select id="certPrivate" class="value"></select>
-                <label class="translate" for="certPrivate">Private certificate:</label>
+                <label class="translate" for="certPrivate">Private certificate</label>
             </div>
             <div class="col s12 m3 input-field">
                 <select id="certChained" class="value"></select>
-                <label class="translate" for="certChained">Chained certificate:</label>
+                <label class="translate" for="certChained">Chained certificate</label>
             </div>
         </div>
 
         <div class="row">
             <div class="col s12 input-field">
-                <input class="value" id="homeGraphJSONKey" />
-                <label class="translate" for="homeGraphJSONKey">Google HomeGraph JSON Key:</label>
+                <input type="text" class="value" id="homeGraphJSONKey" />
+                <label class="translate" for="homeGraphJSONKey">Google HomeGraph JSON Key</label>
                 <span class="translate"><a
                         href="https://developers.google.com/assistant/smarthome/develop/report-state#service-account-key">Create
                         a Service Account Key</a> for your project and copy/paste the JSON here.</span>
@@ -115,7 +115,7 @@
 
         <div class="row">
             <div class="col s12 m6 input-field">
-                <input class="value" id="oauthClientId" />
+                <input type="text" class="value" id="oauthClientId" />
                 <label class="translate" for="oauthClientId">OAuth Client ID</label>
                 <span class="translate">Client ID configured in the Account Linking section of your <a href="https://console.actions.google.com/">Actions on Google Console</a>.</span>
             </div>
