@@ -31,21 +31,38 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
     /**
      * Is called when databases are connected and adapter received configuration.
      */
+
     async onReady() {
-        // Load config from file until we get admin UI done.
-        this.config = require('./testConfig.js');
+        // Construct more config from that given
+        let configPass = false;
+        try {
+            const keyObject = JSON.parse(this.config.homeGraphJSONKey);
+            this.config.homeGraphJSONKey = keyObject;
+            this.config.publicUrl = `https://${this.config.publicFQDN}/oidc`;
+            this.config.oauthRedirect = `https://oauth-redirect.googleusercontent.com/r/${this.config.homeGraphJSONKey.project_id}`;
+            this.config.oauthWritePeriod = 300000; // Flush memory cache to disk every 5 minutes
+            configPass = true;
+        } catch (error) {
+            this.terminate(
+                'Failed to construct added configuration from that given. Please check adapter configuration',
+                utils.EXIT_CODES.INVALID_ADAPTER_CONFIG);
+        }
 
-        // Create secure ExpressJS server
-        const express = require('express');
-        const https = require('https');
-        const app = express();
+        console.log(this.config);
 
-        const certificates = await this.getCertificatesAsync(this.config.certPublic, this.config.certPrivate, this.config.certChained);
-        const server = https.createServer(certificates[0], app).listen(this.config.port);
+        if (configPass) {
+            // Create secure ExpressJS server
+            const express = require('express');
+            const https = require('https');
+            const app = express();
 
-        // Slightly odd require here but this is so the main code is compatible with possible
-        // use as an ioBroker.web extension (well - that's how it started out anyhow).
-        require('./lib/googleSmartHomeFulfillment.js')(server, { secure: true, port: this.config.port }, this, this.config, app);
+            const certificates = await this.getCertificatesAsync(this.config.certPublic, this.config.certPrivate, this.config.certChained);
+            const server = https.createServer(certificates[0], app).listen(this.config.port);
+
+            // Slightly odd require here but this is so the main code is compatible with possible
+            // use as an ioBroker.web extension (well - that's how it started out anyhow).
+            require('./lib/googleSmartHomeFulfillment.js')(server, { secure: true, port: this.config.port }, this, this.config, app);
+        }
     }
 
     /**
