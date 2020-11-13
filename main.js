@@ -41,6 +41,7 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
             this.config.publicUrl = `https://${this.config.publicFQDN}/oidc`;
             this.config.oauthRedirect = `https://oauth-redirect.googleusercontent.com/r/${this.config.homeGraphJSONKey.project_id}`;
             this.config.oauthWritePeriod = 300000; // Flush memory cache to disk every 5 minutes
+            this.config.agentUserId = 'dummy'; // ... as we don't care about this
             configPass = true;
         } catch (error) {
             this.terminate(
