@@ -7,14 +7,39 @@
 ![Number of Installations (stable)](http://iobroker.live/badges/google-smart-home-fulfillment-stable.svg)
 [![Dependency Status](https://img.shields.io/david/raintonr/iobroker.google-smart-home-fulfillment.svg)](https://david-dm.org/raintonr/iobroker.google-smart-home-fulfillment)
 [![Known Vulnerabilities](https://snyk.io/test/github/raintonr/ioBroker.google-smart-home-fulfillment/badge.svg)](https://snyk.io/test/github/raintonr/ioBroker.google-smart-home-fulfillment)
+[![Tests](https://travis-ci.org/raintonr/ioBroker.legrand-ecocompteur.svg?branch=master)](https://travis-ci.org/raintonr/ioBroker.google-smart-home-fulfillment)
 
 [![NPM](https://nodei.co/npm/iobroker.google-smart-home-fulfillment.png?downloads=true)](https://nodei.co/npm/iobroker.google-smart-home-fulfillment/)
 
-**Tests:** ![Test and Release](https://github.com/raintonr/ioBroker.google-smart-home-fulfillment/workflows/Test%20and%20Release/badge.svg)
-
 ## google-smart-home-fulfillment adapter for ioBroker
 
-Adapter for ioBroker to implement a Google Smart Home Actions fulfillment server.
+### Caveats
+
+**This software is currently cosidered Beta test quality. Use at your own risk.**
+
+**Setup of this adapter requires some technical knowledge.** If you are looking or a way to connect an ioBroker instance with Google Assistant consider the [ioBroker.iot](https://github.com/ioBroker/ioBroker.iot) adapter. Pros & cons of each are briefly discussed below.
+
+### Introduction
+
+This adapter implements a Google Smart Home Actions fulfillment server running within an ioBroker installation. It creates devices in the Google ecosystem to mirror devices within the ioBroker object tree. These can be controller from any [Google Assistant](https://assistant.google.com/) device, smartphone running the Google Assistant app, etc.
+
+#### Compared with ioBroker.iot
+
+Benefits of this adapter over ioBroker.iot include:
+
+- No (ioBroker Pro) [https://iobroker.pro/] subscription required. In fact, no subscriptions of any kind are necessary making this implementation completely free.
+- Device configuration is automatic. Once the adapter is correctly up and running no further configuration is required.
+
+Disadvantages:
+
+- More complicated installation process (see below).
+- Foreign adapter developers must create plugin code to allow their devices to used. Mapping between ioBroker/Google Home device types is necessary, and the philosophy here is that such mapping & translation should be performed in code on a per-foreign adapter basis. That is, foregin adapter developers should create a plugin for iobroker.google-smart-home-fulfillment which describes how devices in that foreign adapter map to devices in the Google Home and how commands and queries for each are serviced. While this requires more development effort, this philosophy actually leads to less configuration effort for the end user (an advantage above) and ultimately more flexibility how devices can be controlled.
+- Given the above, a limited set of foregin adapters and device types are supported. Current foreign adapters are:
+-- [ioBroker.Loxone](https://github.com/UncleSamSwiss/ioBroker.loxone)
+
+Feel free to [submit a feature request issue](https://github.com/raintonr/ioBroker.google-smart-home-fulfillment/issues) for with plugin requests.
+
+### Setup & Configuration
 
 To use this adapter you will need to:
 
@@ -24,83 +49,6 @@ To use this adapter you will need to:
 -- Create a project that will be specifically used to communicate with this adapter instance. The project should be left in testing mode and not published.
 
 TODO: and much more...
-
-## Developer manual
-This section is intended for the developer. It can be deleted later
-
-### Getting started
-
-You are almost done, only a few steps left:
-1. Create a new repository on GitHub with the name `ioBroker.google-smart-home-fulfillment`
-1. Initialize the current folder as a new git repository:  
-    ```bash
-    git init
-    git add .
-    git commit -m "Initial commit"
-    ```
-1. Link your local repository with the one on GitHub:  
-    ```bash
-    git remote add origin https://github.com/raintonr/ioBroker.google-smart-home-fulfillment
-    ```
-
-1. Push all files to the GitHub repo:  
-    ```bash
-    git push origin master
-    ```
-
-1. Head over to [main.js](main.js) and start programming!
-
-### Best Practices
-We've collected some [best practices](https://github.com/ioBroker/ioBroker.repositories#development-and-coding-best-practices) regarding ioBroker development and coding in general. If you're new to ioBroker or Node.js, you should
-check them out. If you're already experienced, you should also take a look at them - you might learn something new :)
-
-### Scripts in `package.json`
-Several npm scripts are predefined for your convenience. You can run them using `npm run <scriptname>`
-| Script name | Description |
-|-------------|-------------|
-| `test:js` | Executes the tests you defined in `*.test.js` files. |
-| `test:package` | Ensures your `package.json` and `io-package.json` are valid. |
-| `test:unit` | Tests the adapter startup with unit tests (fast, but might require module mocks to work). |
-| `test:integration` | Tests the adapter startup with an actual instance of ioBroker. |
-| `test` | Performs a minimal test run on package files and your tests. |
-| `check` | Performs a type-check on your code (without compiling anything). |
-| `lint` | Runs `ESLint` to check your code for formatting errors and potential bugs. |
-
-### Writing tests
-When done right, testing code is invaluable, because it gives you the 
-confidence to change your code while knowing exactly if and when 
-something breaks. A good read on the topic of test-driven development 
-is https://hackernoon.com/introduction-to-test-driven-development-tdd-61a13bc92d92. 
-Although writing tests before the code might seem strange at first, but it has very 
-clear upsides.
-
-The template provides you with basic tests for the adapter startup and package files.
-It is recommended that you add your own tests into the mix.
-
-### Publishing the adapter
-Since you have chosen GitHub Actions as your CI service, you can 
-enable automatic releases on npm whenever you push a new git tag that matches the form 
-`v<major>.<minor>.<patch>`. The necessary steps are described in `.github/workflows/test-and-release.yml`.
-
-To get your adapter released in ioBroker, please refer to the documentation 
-of [ioBroker.repositories](https://github.com/ioBroker/ioBroker.repositories#requirements-for-adapter-to-get-added-to-the-latest-repository).
-
-### Test the adapter manually on a local ioBroker installation
-In order to install the adapter locally without publishing, the following steps are recommended:
-1. Create a tarball from your dev directory:  
-    ```bash
-    npm pack
-    ```
-1. Upload the resulting file to your ioBroker host
-1. Install it locally (The paths are different on Windows):
-    ```bash
-    cd /opt/iobroker
-    npm i /path/to/tarball.tgz
-    ```
-
-For later updates, the above procedure is not necessary. Just do the following:
-1. Overwrite the changed files in the adapter directory (`/opt/iobroker/node_modules/iobroker.google-smart-home-fulfillment`)
-1. Execute `iobroker upload google-smart-home-fulfillment` on the ioBroker host
 
 ## Changelog
 
