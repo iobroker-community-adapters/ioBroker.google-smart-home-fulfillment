@@ -27,7 +27,7 @@ This adapter implements a Google Smart Home Actions fulfillment server running w
 
 Benefits of this adapter over ioBroker.iot include:
 
-- No (ioBroker Pro) [https://iobroker.pro/] subscription required. In fact, no subscriptions of any kind are necessary making this implementation completely free.
+- No (ioBroker Pro)[https://iobroker.pro/] subscription required. In fact, no subscriptions of any kind are necessary so this implementation is **completely free to use**.
 - Device configuration is automatic. Once the adapter is correctly up and running no further configuration is required.
 
 Disadvantages:
@@ -39,16 +39,77 @@ Disadvantages:
 
 Feel free to [submit a feature request issue](https://github.com/raintonr/ioBroker.google-smart-home-fulfillment/issues) for with plugin requests.
 
-### Setup & Configuration
+### Create an Actions on Google Test Project
 
-To use this adapter you will need to:
+For correct integration with Google Assistant a project is required. 
 
-- Make sure there is a HTTPS server running within the ioBroker installation. Use [ioBroker.web](https://github.com/ioBroker/ioBroker.web) for this purpose.
+Visit the [Actions on Google Console](https://console.actions.google.com/) and create a new project. This is going to be a test project and will never be published so the name isn't really important. For example purposes below we assume `My ioBroker` is used.
 
-- Visit the [Actions on Google Console](https://console.actions.google.com/).
--- Create a project that will be specifically used to communicate with this adapter instance. The project should be left in testing mode and not published.
+The following configuration settings are necessary in the 'Develop' tab:
 
-TODO: and much more...
+- Actions
+-- Fulfillment URL. Set to `https://example.com/fulfillment` where 'example.com' is actually the public FQDN of the ioBroker instance (and must match the setting configured in ioBroker below).
+
+- Account linking
+-- OAuth Client Information
+--- Client ID & Secret. Enter some random strings here. It doesn't matter what is used so long as the same values are entered in the ioBroker configuration below.
+--- Authorization URL. Set to `https://example.com/oidc/auth` (replacing 'example.com' with the correct public FQDN).
+--- Token URL. Set to `https://example.com/oidc/token` (replacing 'example.com' with the correct public FQDN).
+-- Configure your client (optional)
+--- Scopes. Enter `Fulfillment` here.
+
+Moving on to the 'Test' tab:
+
+In the simulator here there is a 'Settings' button over on the right. Make sure 'On device testing' is selected here.
+
+### ioBroker Installation & Configuration
+
+Install the adapter in the usual way then visit the settings page and follow the steps below to determine each value required:
+
+#### Secure HTTPS Port
+
+HTTPS requests from the public internet must be correctly received by this adapter for it to function correctly. The adapter will create a HTTPS server listening on the specified port. This port does not necessarily need to be the standard 443, and it is often preferrable not to use that due to O/S restrictions on privileged ports. The author suggests using port `8443`.
+
+#### Public FQDN
+
+Requests to port 443 on this public FQDN (or IP address) must be received by the adapter, on the HTTPS port configured. Usually achieved through port forwarding/firewall configuration. If a fixed IP address or name is available that should be used, otherwise it could be possible to use a dynamic DNS resolution service and place the configured public name here.
+
+#### Public/Private/Chained Certrificates
+
+Required for correct HTTPS operation. Within ioBroker, certificates are stored in the system configuration/certificates configuration screen. Follow the usual steps for obtaining a valid set of certificates and be sure they are stored in the system configuration/certificates screen, then select them in the correct order here.
+
+**At this time automatic certificate generation from Let’s Encrypt is broken** so certificates must be created by another means, generally manually with (certbot)[https://certbot.eff.org/] (see [Getting Started Let’s Encrypt](https://letsencrypt.org/getting-started/)).
+
+#### Google HomeGraph JSON Key
+
+[Create a Service Account Key](https://developers.google.com/assistant/smarthome/develop/report-state#service-account-key) for your project and copy/paste the JSON here.
+
+#### OAuth Client ID/Secret
+
+Enter the client ID & secret configured in your project in the [Actions on Google Console](https://console.actions.google.com/)
+
+### Troubleshooting
+
+#### Test public connectivity and certificates
+
+Say the configured public FQDN is `example.com`. Verify external connectivity and certificates by visiting `https://example.com/`. This should yield a 404 response with a single line reading, `Cannot GET /` - that is expected behaviour. There should be no certificate errors (click the padlock in the brower URL bar to verify).
+
+#### Check the Google HomeGraph API console
+
+https://console.cloud.google.com/apis/api/homegraph.googleapis.com/overview
+
+### Add Devices in Google Home App
+
+Once all the above installation and configuration steps are complete it's time to link ioBroker with Google Home. Follow these steps in Google Home App:
+
+- Hit the plus symbol to add/setup a new device.
+- Select the 'Works with Google' option. A list of many external services will load.
+- Select your test project name in the list. Say the project is named `My ioBroker` in this list it will be shown as `[test] My ioBroker`.
+- Follow the OAuth login/grant process.
+
+At this point a list of devices know to the fulfillment adater should be shown. If you are satisfied with the room placement just hit 'done'.
+
+If you made it this far, well done! ;) Enjoy :)
 
 ## Changelog
 
