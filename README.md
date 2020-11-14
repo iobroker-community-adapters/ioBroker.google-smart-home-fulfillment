@@ -74,11 +74,11 @@ HTTPS requests from the public internet must be correctly received by this adapt
 Requests to port 443 on this public FQDN (or IP address) must be received by the adapter, on the HTTPS port configured. Usually achieved through port forwarding/firewall configuration. If a fixed IP address or name is available that should be used, otherwise it could be possible to use a dynamic DNS resolution service and place the configured public name here.
 - Public/Private/Chained Certrificates\
 Required for correct HTTPS operation. Within ioBroker, certificates are stored in the system configuration/certificates configuration screen. Follow the usual steps for obtaining a valid set of certificates and be sure they are stored in the system configuration/certificates screen, then select them in the correct order here.\
-**At this time automatic certificate generation from Let’s Encrypt is broken** so certificates must be created by another means, generally manually with (certbot)[https://certbot.eff.org/] (see [Getting Started Let’s Encrypt](https://letsencrypt.org/getting-started/)).
+**At this time automatic certificate generation from Let’s Encrypt is broken** so certificates must be created by another means, generally manually with [certbot](https://certbot.eff.org/) (see [Getting Started Let’s Encrypt](https://letsencrypt.org/getting-started/)).
 - Google HomeGraph JSON Key\
 [Create a Service Account Key](https://developers.google.com/assistant/smarthome/develop/report-state#service-account-key) for your project and copy/paste the JSON here.
 - OAuth Client ID/Secret\
-Enter the client ID & secret configured in your project in the [Actions on Google Console](https://console.actions.google.com/)
+Enter the client ID & secret configured in your project in the [Actions on Google Console](https://console.actions.google.com/).
 
 ### Add Devices in Google Home App
 
