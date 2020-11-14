@@ -37,7 +37,7 @@ Disadvantages:
 Mapping between ioBroker/Google Home device types is necessary, and the philosophy here is that such mapping & translation should be performed in code on a per-foreign adapter basis. That is, foregin adapter developers should create a plugin for iobroker.google-smart-home-fulfillment which describes how devices in that foreign adapter map to devices in Google Home and how commands and queries for each are serviced. While this requires more development effort, this philosophy actually leads to less configuration effort for the end user (an advantage above) and ultimately more flexibility on how devices can be created and controlled.
 - Given the above, a limited set of foregin adapters and device types are supported.\
 Current foreign adapters are:
-  - [ioBroker.Loxone](https://github.com/UncleSamSwiss/ioBroker.loxone)
+  - [ioBroker.Loxone](https://github.com/UncleSamSwiss/ioBroker.loxone) (see [Loxone readme](lib/plugins/loxone/README.md)).
 
 Feel free to [submit a feature request issue](https://github.com/raintonr/ioBroker.google-smart-home-fulfillment/issues) for with plugin requests.
 
