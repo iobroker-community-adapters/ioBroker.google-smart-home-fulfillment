@@ -26,6 +26,8 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
         // this.on('objectChange', this.onObjectChange.bind(this));
         // this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
+
+        this.subscribedStatesHandlers = [];
     }
 
     /**
@@ -101,6 +103,16 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
     //     }
     // }
 
+    // Because there are plugins called later on, create a method to both subscribe
+    // to states and make a note of the handler changes to this state should be
+    // passed to
+
+    async subscribeForeignStateHandler(id, handler) {
+        this.log.debug(`Subscribing to ${id}`);
+        this.subscribedStatesHandlers[id] = handler;
+        this.subscribeForeignStatesAsync(id);
+    }
+
     /**
      * Is called if a subscribed state changes
      * @param {string} id
@@ -110,6 +122,8 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
         if (state) {
             // The state was changed
             this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+            // Call the handler for whoever created this subscription
+            this.subscribedStatesHandlers[id](id, state);
         } else {
             // The state was deleted
             this.log.info(`state ${id} deleted`);
