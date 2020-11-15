@@ -71,7 +71,6 @@
         "webExtension": "lib/googleSmartHomeFulfillment.js"
     },
     "native": {
-        "option2": "42"
     },
     "objects": [],
     "instanceObjects": []
