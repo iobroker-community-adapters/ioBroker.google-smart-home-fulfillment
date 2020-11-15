@@ -21,7 +21,7 @@ The following (Loxone) device types are supported:
   
 - Automatic Blinds (Jalousie)
   - One automatic blinds block in Loxone creates one Google Home shutter device.
-    - *Hey Google... close <name of Loxone device>* - Same as hitting 'Down Full' on the Loxone app/UI.
+    - *Hey Google... close \<name of Loxone device>* - Same as hitting 'Down Full' on the Loxone app/UI.
     - *Hey Google... close the shutters* - Closes all the shutters in the current room.
     - *Hey Google... stop the shutters* - Stops movement of any shutters in the current room.
     - *Hey Google... close all the shutters* - Closes all the shutters throughout the home.
