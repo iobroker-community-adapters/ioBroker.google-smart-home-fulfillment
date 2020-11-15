@@ -45,7 +45,7 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
             configPass = true;
         } catch (error) {
             this.terminate(
-                'Failed to construct added configuration from that given. Please check adapter configuration',
+                'Failed to construct added configuration from that given. Please check adapter configuration.',
                 utils.EXIT_CODES.INVALID_ADAPTER_CONFIG);
         }
 
