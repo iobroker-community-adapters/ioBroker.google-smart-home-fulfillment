@@ -26,6 +26,11 @@ The following (Loxone) device types are supported:
     - *Hey Google... stop the shutters* - Stops movement of any shutters in the current room.
     - *Hey Google... close all the shutters* - Closes all the shutters throughout the home.
 
+- Switch
+  - One Loxone switch visible in the UI creates a Google Home switch device.
+    - *Hey Google... turn on \<name of Loxone device>* - Turn switch on.
+    - *Hey Google... turn off \<name of Loxone device>* - Turn switch off.
+
 ### Options
 
 TODO: the reversible scenes option is hardcoded to `false` right now (bottom of `lib/plugins/loxone.js`). A screen for plugin settings is required.
