@@ -28,8 +28,10 @@
                 if ($key.attr('type') === 'checkbox') {
                     // do not call onChange direct, because onChange could expect some arguments
                     $key.prop('checked', settings[id])
-                        .on('change', () => onChange())
-                        ;
+                        .on('change', () => {
+                            showHideSettings($(this).attr('id'));
+                            onChange()
+                        });
                 } else {
                     // do not call onChange direct, because onChange could expect some arguments
                     $key.val(settings[id])
@@ -40,12 +42,41 @@
             });
             onChange(false);
 
-            // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-            if (M) M.updateTextFields();
-
             fillSelectCertificates('#certPublic', 'public', settings.certPublic);
             fillSelectCertificates('#certPrivate', 'private', settings.certPrivate);
             fillSelectCertificates('#certChained', 'chained', settings.certChained);
+
+            // TODO: maybe this would be better in the admin core?
+            function fillSelectEnums(id, type, values) {
+                getEnums(type, function (err, enumsObject) {
+                    var opts = '';
+                    enumsList = Object.values(enumsObject);
+                    for (var lp = 0; lp < enumsList.length; lp++) {
+                        enumName = enumsList[lp].common.name;
+                        opts += '<option value="' + enumName + '" ' + (Array.isArray(values) && values.includes(enumName) ? 'selected' : '') + '>' + enumName + '</option>';
+                    }
+                    $(id).html(opts);
+                    if (isMaterialize) {
+                        $(id).select();
+                    }
+                });
+            };
+            fillSelectEnums('#pluginsLoxoneExcludeFunctions', 'functions', settings.pluginsLoxoneExcludeFunctions);
+            fillSelectEnums('#pluginsLoxoneExcludeRooms', 'rooms', settings.pluginsLoxoneExcludeRooms);
+
+            showHideSettings();
+
+            // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+            if (M) M.updateTextFields();
+        }
+
+        function showHideSettings(id) {
+            // TODO: when we have multipled plugins find the enable boxes in a loop
+            if ($('#pluginsLoxoneEnabled').prop('checked')) {
+                $('.pluginsLoxone').show();
+            } else {
+                $('.pluginsLoxone').hide();
+            }
         }
 
         // This will be called by the admin adapter when the user presses the save button
@@ -143,26 +174,28 @@
 
             <div id="tab-plugins" class="col s12 page">
                 <div class="row">
-                    <div class="col s16 m6">
+                    <div class="col s12 m3">
                         <h6>Loxone</h6>
                     </div>
-                    <div class="col s12 m6 input-field">
+                    <div class="col s12 m3 input-field">
                         <input class="value" id="pluginsLoxoneEnabled" type="checkbox" />
                         <label class="translate" for="pluginsLoxoneEnabled">Enable</label>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row pluginsLoxone">
                     <div class="col s12 m4 input-field">
-                        <select id="pluginsLoxoneExcludeFunctions" class="value"></select>
+                        <select id="pluginsLoxoneExcludeFunctions" class="value" multiple></select>
                         <label class="translate" for="pluginsLoxoneExcludeFunctions">Exclude functions</label>
+                        <span>Devices having excluded functions will not be exposed to Google Home.</span>
                     </div>
                     <div class="col s12 m4 input-field">
-                        <select id="pluginsLoxoneExcludeRooms" class="value"></select>
+                        <select id="pluginsLoxoneExcludeRooms" class="value" multiple></select>
                         <label class="translate" for="pluginsLoxoneExcludeRooms">Exclude rooms</label>
+                        <span>Devices in excluded rooms will not be exposed to Google Home.</span>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row pluginsLoxone">
                     <div class="col s12 m12 input-field">
                         <input class="value" id="pluginsLoxoneSceneReversible" type="checkbox" />
                         <label class="translate" for="pluginsLoxoneSceneReversible">Reversible scenes</label>
