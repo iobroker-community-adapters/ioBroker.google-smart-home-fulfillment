@@ -69,60 +69,109 @@
 <body>
 
     <div class="m adapter-container">
-
         <div class="row">
-            <div class="col s6 m3 l2">
-                <img src="google-smart-home-fulfillment.png" class="logo">
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col s12 m3 input-field">
-                <input class="value" id="port" size="5" maxlength="5" type="number" />
-                <label class="translate" for="port">Secure HTTPS Port</label>
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s2"><a href="#tab-main" class="translate active">Main settings</a></li>
+                    <li class="tab col s2 plugins"><a href="#tab-plugins" class="translate">Plugins</a></li>
+                </ul>
             </div>
-            <div class="col s12 m6 input-field">
-                <input type="text" class="value" id="publicFQDN" />
-                <label class="translate" for="publicFQDN">Public FQDN</label>
-                <span class="translate">Your public FQDN or IP address. Requests to port 443 on this address must be received by this Adapter, on the HTTPS port configured here. Usually achieved through port forwarding/firewall configuration.</span>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col s12 m3 input-field">
-                <select id="certPublic" class="value"></select>
-                <label class="translate" for="certPublic">Public certificate</label>
-            </div>
-            <div class="col s12 m3 input-field">
-                <select id="certPrivate" class="value"></select>
-                <label class="translate" for="certPrivate">Private certificate</label>
-            </div>
-            <div class="col s12 m3 input-field">
-                <select id="certChained" class="value"></select>
-                <label class="translate" for="certChained">Chained certificate</label>
-            </div>
-        </div>
+            <div id="tab-main" class="col s12 page">
+                <div class="row">
+                    <div class="col s6 m3 l2">
+                        <img src="google-smart-home-fulfillment.png" class="logo">
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col s12 input-field">
-                <input type="text" class="value" id="homeGraphJSONKey" />
-                <label class="translate" for="homeGraphJSONKey">Google HomeGraph JSON Key</label>
-                <span class="translate"><a
-                        href="https://developers.google.com/assistant/smarthome/develop/report-state#service-account-key">Create
-                        a Service Account Key</a> for your project and copy/paste the JSON here.</span>
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col s12 m3 input-field">
+                        <input class="value" id="port" size="5" maxlength="5" type="number" />
+                        <label class="translate" for="port">Secure HTTPS Port</label>
+                    </div>
+                    <div class="col s12 m6 input-field">
+                        <input type="text" class="value" id="publicFQDN" />
+                        <label class="translate" for="publicFQDN">Public FQDN</label>
+                        <span class="translate">Your public FQDN or IP address. Requests to port 443 on this address
+                            must be
+                            received by this Adapter, on the HTTPS port configured here. Usually achieved through port
+                            forwarding/firewall configuration.</span>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col s12 m6 input-field">
-                <input type="text" class="value" id="oauthClientId" />
-                <label class="translate" for="oauthClientId">OAuth Client ID</label>
-                <span class="translate">Client ID configured in the Account Linking section of your <a href="https://console.actions.google.com/">Actions on Google Console</a>.</span>
+                <div class="row">
+                    <div class="col s12 m4 input-field">
+                        <select id="certPublic" class="value"></select>
+                        <label class="translate" for="certPublic">Public certificate</label>
+                    </div>
+                    <div class="col s12 m4 input-field">
+                        <select id="certPrivate" class="value"></select>
+                        <label class="translate" for="certPrivate">Private certificate</label>
+                    </div>
+                    <div class="col s12 m4 input-field">
+                        <select id="certChained" class="value"></select>
+                        <label class="translate" for="certChained">Chained certificate</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12 input-field">
+                        <input type="text" class="value" id="homeGraphJSONKey" />
+                        <label class="translate" for="homeGraphJSONKey">Google HomeGraph JSON Key</label>
+                        <span class="translate"><a
+                                href="https://developers.google.com/assistant/smarthome/develop/report-state#service-account-key">Create
+                                a Service Account Key</a> for your project and copy/paste the JSON here.</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12 m6 input-field">
+                        <input type="text" class="value" id="oauthClientId" />
+                        <label class="translate" for="oauthClientId">OAuth Client ID</label>
+                        <span class="translate">Client ID configured in the Account Linking section of your <a
+                                href="https://console.actions.google.com/">Actions on Google Console</a>.</span>
+                    </div>
+                    <div class="col s12 m6 input-field">
+                        <input class="value" id="oauthClientSecret" type="password" />
+                        <label class="translate" for="oauthClientSecret">OAuth Client Secret</label>
+                        <span class="translate">Client Secret configured in the Account Linking section of your <a
+                                href="https://console.actions.google.com/">Actions on Google Console</a>.</span>
+                    </div>
+                </div>
             </div>
-            <div class="col s12 m6 input-field">
-                <input class="value" id="oauthClientSecret" type="password"/>
-                <label class="translate" for="oauthClientSecret">OAuth Client Secret</label>
-                <span class="translate">Client Secret configured in the Account Linking section of your <a href="https://console.actions.google.com/">Actions on Google Console</a>.</span>
+
+            <div id="tab-plugins" class="col s12 page">
+                <div class="row">
+                    <div class="col s16 m6">
+                        <h6>Loxone</h6>
+                    </div>
+                    <div class="col s12 m6 input-field">
+                        <input class="value" id="pluginsLoxoneEnabled" type="checkbox" />
+                        <label class="translate" for="pluginsLoxoneEnabled">Enable</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m4 input-field">
+                        <select id="pluginsLoxoneExcludeFunctions" class="value"></select>
+                        <label class="translate" for="pluginsLoxoneExcludeFunctions">Exclude functions</label>
+                    </div>
+                    <div class="col s12 m4 input-field">
+                        <select id="pluginsLoxoneExcludeRooms" class="value"></select>
+                        <label class="translate" for="pluginsLoxoneExcludeRooms">Exclude rooms</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12 m12 input-field">
+                        <input class="value" id="pluginsLoxoneSceneReversible" type="checkbox" />
+                        <label class="translate" for="pluginsLoxoneSceneReversible">Reversible scenes</label>
+                        <span class="translate">If checked, requesting a lighting scene mixes that scene in and thus a
+                            request to deactivate can be made to mix a scene out. If left unchecked scene requests
+                            result in
+                            only that scene being activated.</span>
+                    </div>
+                </div>
             </div>
         </div>
 
