@@ -31,6 +31,13 @@ The following (Loxone) device types are supported:
     - *Hey Google... turn on \<name of Loxone device>* - Turn switch on.
     - *Hey Google... turn off \<name of Loxone device>* - Turn switch off.
 
+- Timed Switch (Stairwell Light Switch)
+  - One Loxone switch visible in the UI creates a Google Home switch device.
+    - *Hey Google... start \<name of Loxone device>* - Triggers the timer (ie. turns on output for period preset in Loxone).
+    - *Hey Google... stop \<name of Loxone device>* - Turn switch off.
+    - *Hey Google... turn on \<name of Loxone device>* - Turn switch on permanently (ie. no timer involved so switch stays on until turned off manually).
+    - *Hey Google... turn off \<name of Loxone device>* - Turn switch off.
+
 ### Options
 
 TODO: the reversible scenes option is hardcoded to `false` right now (bottom of `lib/plugins/loxone.js`). A screen for plugin settings is required.
