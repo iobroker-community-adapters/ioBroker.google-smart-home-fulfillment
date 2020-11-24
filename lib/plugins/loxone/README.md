@@ -10,7 +10,7 @@ The following (Loxone) device types are supported:
   - One lighting controller in Loxone creates one Google Home light device with on/off function. This is purely so the user can ask to turn off lights.
     - *Hey Google... turn off the lights* - Triggers Loxone 'Off' mood.
     - *Hey Google... turn on the lights* - Triggers Loxone 'Bright' mood.
-  - Additionally, one Google Home scene device is created for each Loxone mood in each lighting controller (excluding 'Off' moods which are redundant). This can operate in one of two ways: with or without reversible scenes.
+  - Additionally, one Google Home scene device is created for each Loxone mood in each lighting controller (excluding 'Off' moods which are redundant). This can operate in one of two ways: with or without reversible scenes (selectable on the settings screen).
     - With reversible scenes moods can be mixed in and out:
       - *Hey Google... activate scene \<name of Loxone mood>* - Mixes in the named scene.
       - *Hey Google... deactivate scene \<name of Loxone mood>* - Mixes out the named scene.
@@ -37,7 +37,3 @@ The following (Loxone) device types are supported:
     - *Hey Google... stop \<name of Loxone device>* - Turn switch off.
     - *Hey Google... turn on \<name of Loxone device>* - Turn switch on permanently (ie. no timer involved so switch stays on until turned off manually).
     - *Hey Google... turn off \<name of Loxone device>* - Turn switch off.
-
-### Options
-
-TODO: the reversible scenes option is hardcoded to `false` right now (bottom of `lib/plugins/loxone.js`). A screen for plugin settings is required.
