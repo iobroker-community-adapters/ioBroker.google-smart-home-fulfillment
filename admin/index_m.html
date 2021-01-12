@@ -40,10 +40,6 @@
                     }
                 });
 
-                fillSelectCertificates('#certPublic', 'public', settings.certPublic);
-                fillSelectCertificates('#certPrivate', 'private', settings.certPrivate);
-                fillSelectCertificates('#certChained', 'chained', settings.certChained);
-
                 // TODO: maybe this would be better in the admin core?
                 function fillSelectEnums(id, type, values) {
                     getEnums(type, function (err, enumsObject) {
@@ -82,19 +78,12 @@
             }
 
             function showHideSettings(id) {
-                // TODO: when we have multipled plugins find the enable boxes in a loop
+                // TODO: when we have multiple plugins find the enable boxes in a loop
                 if ($('#pluginsLoxoneEnabled').prop('checked')) {
                     $('.pluginsLoxone').show();
                 } else {
                     $('.pluginsLoxone').hide();
                 }
-                console.log('webInstance: ' + $('#webInstance').val());
-                if ($('#webInstance').val()) {
-                    $('.no-if-extend').hide();
-                } else {
-                    $('.no-if-extend').show();
-                }
-
             }
 
             // This will be called by the admin adapter when the user presses the save button
@@ -137,7 +126,6 @@
                     <div class="row">
                         <div class="col s12 m6">
                             <select class="value" id="webInstance">
-                                <option value=""  class="translate">none</option>
                                 <option value="*" class="translate">all</option>
                             </select>
                             <label class="translate" for="webInstance">Extend WEB adapter:</label>
@@ -146,28 +134,6 @@
                             <input type="text" class="value" id="publicFQDN" />
                             <label class="translate" for="publicFQDN">Public FQDN</label>
                             <span class="translate">Your public FQDN or IP address. Requests to port 443 on this address must be received by this Adapter (or the extended Web Adapter), on the HTTPS port configured here. Usually achieved through port                            forwarding/firewall configuration.</span>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col s12 m3 input-field no-if-extend">
-                            <input class="value" id="port" size="5" maxlength="5" type="number" />
-                            <label class="translate" for="port">Secure HTTPS Port</label>
-                        </div>
-                    </div>
-
-                    <div class="row no-if-extend">
-                        <div class="col s12 m4 input-field">
-                            <select id="certPublic" class="value"></select>
-                            <label class="translate" for="certPublic">Public certificate</label>
-                        </div>
-                        <div class="col s12 m4 input-field">
-                            <select id="certPrivate" class="value"></select>
-                            <label class="translate" for="certPrivate">Private certificate</label>
-                        </div>
-                        <div class="col s12 m4 input-field">
-                            <select id="certChained" class="value"></select>
-                            <label class="translate" for="certChained">Chained certificate</label>
                         </div>
                     </div>
 
@@ -226,8 +192,7 @@
                             <label class="translate" for="pluginsLoxoneSceneReversible">Reversible scenes</label>
                             <span class="translate">If checked, requesting a lighting scene mixes that scene in and thus a
                                 request to deactivate can be made to mix a scene out. If left unchecked scene requests
-                                result in
-                                only that scene being activated.</span>
+                                result in only that scene being activated.</span>
                         </div>
                     </div>
                 </div>
