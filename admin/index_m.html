@@ -124,11 +124,15 @@
                     </div>
 
                     <div class="row">
-                        <div class="col s12 m6">
+                        <div class="col s12 m3">
                             <select class="value" id="webInstance">
                                 <option value="*" class="translate">all</option>
                             </select>
                             <label class="translate" for="webInstance">Extend WEB adapter:</label>
+                        </div>
+                        <div class="col s12 m3">
+                            <input size="5" maxlength="5" type="number" class="value" id="syncInterval" />
+                            <label class="translate" for="syncInterval">Periodically sync with Google (mins):</label>
                         </div>
                         <div class="col s12 m6 input-field">
                             <input type="text" class="value" id="publicFQDN" />
