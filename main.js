@@ -26,8 +26,6 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
         // this.on('objectChange', this.onObjectChange.bind(this));
         // this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
-
-        this.subscribedStatesHandlers = [];
     }
 
     /**
@@ -35,6 +33,10 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
      */
 
     async onReady() {
+        if (this.config.webInstance) {
+            this.terminate('Adapter configured to run as a part of web service');
+        }
+
         // Construct more config from that given
         let configPass = false;
         try {
@@ -50,8 +52,6 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
                 'Failed to construct added configuration from that given. Please check adapter configuration.',
                 utils.EXIT_CODES.INVALID_ADAPTER_CONFIG);
         }
-
-        console.log(this.config);
 
         if (configPass) {
             // Create secure ExpressJS server
@@ -102,16 +102,6 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
     //         this.log.info(`object ${id} deleted`);
     //     }
     // }
-
-    // Because there are plugins called later on, create a method to both subscribe
-    // to states and make a note of the handler changes to this state should be
-    // passed to
-
-    async subscribeForeignStateHandler(id, handler) {
-        this.log.debug(`Subscribing to ${id}`);
-        this.subscribedStatesHandlers[id] = handler;
-        this.subscribeForeignStatesAsync(id);
-    }
 
     /**
      * Is called if a subscribed state changes
