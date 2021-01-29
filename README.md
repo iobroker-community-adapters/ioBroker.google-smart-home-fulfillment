@@ -66,15 +66,29 @@ Moving on to the 'Test' tab:
 
 ### ioBroker Installation & Configuration
 
-Install the adapter in the usual way then visit the settings page and follow the steps below to determine each value required:
+The fulfilment server runs as a web adapter extension. Ie. you must have an instance of the web adapter already running and responding to HTTPS requests from the public internet for it to function. The easiest way to do this is:
 
-- Secure HTTPS Port\
-HTTPS requests from the public internet must be correctly received by this adapter for it to function correctly. The adapter will create a HTTPS server listening on the specified port. This port does not necessarily need to be the standard 443, and it is often preferrable not to use that due to O/S restrictions on privileged ports. The author suggests using port `8443`.
+- Create an instance of the web adapter, and note the following settings:
+- Main page:
+  - Port\
+  The port used does not necessarily need to be the standard `443`, and it is often preferable not to use that due to O/S restrictions on privileged ports. The author suggests using port `8443` and using port forwarding on a firewall to direct requests on public port `443` to this.
+  - Enable 'Secure (HTTPS)'
+  - For security purposes it is recommended to disable all other options (ie. do not run built in Simple-API, SocketIO, etc).
+- Let's Encrypt page:
+  - Check 'Use Let's Encrypt certificates' & 'Use this instance for automatic update'.
+  - As with ports above, choose a port and for the challenge server to listen on (`8080` is suggested) and be sure this is visible as port `80` from the public internet using firewall forwarding.
+- Advanced page:
+  - Extension handling must be enabled.
+  - For security purposes it is recommended to 'Disable states and socket info' & 'Do not serve web files from objectDB'.
+
+Once a suitable web adapter is running, install the fulfilment adapter in the usual way then visit the settings page:
+
+- Extend WEB adapter\
+Choose the adapter number configured for this purpose as described above.
+- Periodically sync with Google (mins)\
+Self explanatory. Things seem to run smoother if a regular sync is performed.
 - Public FQDN\
-Requests to port 443 on this public FQDN (or IP address) must be received by the adapter, on the HTTPS port configured. Usually achieved through port forwarding/firewall configuration. If a fixed IP address or name is available that should be used, otherwise it could be possible to use a dynamic DNS resolution service and place the configured public name here.
-- Public/Private/Chained Certrificates\
-Required for correct HTTPS operation. Within ioBroker, certificates are stored in the system configuration/certificates configuration screen. Follow the usual steps for obtaining a valid set of certificates and be sure they are stored in the system configuration/certificates screen, then select them in the correct order here.\
-**At this time automatic certificate generation from Let’s Encrypt is broken** so certificates must be created by another means, generally manually with [certbot](https://certbot.eff.org/) (see [Getting Started Let’s Encrypt](https://letsencrypt.org/getting-started/)).
+Requests to port `443` on this public FQDN (or IP address) must be received by the web adapter (configured above). If a fixed IP address or name is available that should be used, otherwise it could be possible to use a dynamic DNS resolution service and place the configured public name here.
 - Google HomeGraph JSON Key\
 [Create a Service Account Key](https://developers.google.com/assistant/smarthome/develop/report-state#service-account-key) for your project and copy/paste the JSON here.
 - OAuth Client ID/Secret\
