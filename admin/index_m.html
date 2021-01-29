@@ -1,213 +1,206 @@
 <html>
+    <head>
+        <!-- Load ioBroker scripts and styles-->
+        <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
+        <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
 
-<head>
+        <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 
-    <!-- Load ioBroker scripts and styles-->
-    <link rel="stylesheet" type="text/css" href="../../css/adapter.css" />
-    <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
+        <script type="text/javascript" src="../../js/translate.js"></script>
+        <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+        <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
-    <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+        <!-- Load our own files -->
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="text/javascript" src="words.js"></script>
 
-    <script type="text/javascript" src="../../js/translate.js"></script>
-    <script type="text/javascript" src="../../lib/js/materialize.js"></script>
-    <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+        <script type="text/javascript">
+            // This will be called by the admin adapter when the settings page loads
+            function load(settings, onChange) {
+                // example: select elements with id=key and class=value and insert value
+                if (!settings) return;
 
-    <!-- Load our own files -->
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <script type="text/javascript" src="words.js"></script>
-
-    <script type="text/javascript">
-        // This will be called by the admin adapter when the settings page loads
-        function load(settings, onChange) {
-            // example: select elements with id=key and class=value and insert value
-            if (!settings) return;
-            $('.value').each(function () {
-                var $key = $(this);
-                var id = $key.attr('id');
-                if ($key.attr('type') === 'checkbox') {
-                    // do not call onChange direct, because onChange could expect some arguments
-                    $key.prop('checked', settings[id])
-                        .on('change', () => {
+                $('.value').each(function () {
+                    var key = $(this).attr('id');
+                    var $value = $('#' + key + '.value');
+                    if ($value.attr('type') === 'checkbox') {
+                        $value.prop('checked', settings[key]).on('change', function() {
                             showHideSettings($(this).attr('id'));
-                            onChange()
+                            onChange();
                         });
-                } else {
-                    // do not call onChange direct, because onChange could expect some arguments
-                    $key.val(settings[id])
-                        .on('change', () => onChange())
-                        .on('keyup', () => onChange())
-                        ;
-                }
-            });
-            onChange(false);
-
-            fillSelectCertificates('#certPublic', 'public', settings.certPublic);
-            fillSelectCertificates('#certPrivate', 'private', settings.certPrivate);
-            fillSelectCertificates('#certChained', 'chained', settings.certChained);
-
-            // TODO: maybe this would be better in the admin core?
-            function fillSelectEnums(id, type, values) {
-                getEnums(type, function (err, enumsObject) {
-                    var opts = '';
-                    enumsList = Object.values(enumsObject);
-                    for (var lp = 0; lp < enumsList.length; lp++) {
-                        enumName = enumsList[lp].common.name;
-                        opts += '<option value="' + enumName + '" ' + (Array.isArray(values) && values.includes(enumName) ? 'selected' : '') + '>' + enumName + '</option>';
-                    }
-                    $(id).html(opts);
-                    if (isMaterialize) {
-                        $(id).select();
+                    } else {
+                        $value.val(settings[key]).on('change', function() {
+                            if (key === 'webInstance') showHideSettings();
+                            showHideSettings($(this).attr('id'));
+                            onChange();
+                        }).keyup(function() {
+                            $(this).trigger('change');
+                        });
                     }
                 });
-            };
-            fillSelectEnums('#pluginsLoxoneExcludeFunctions', 'functions', settings.pluginsLoxoneExcludeFunctions);
-            fillSelectEnums('#pluginsLoxoneExcludeRooms', 'rooms', settings.pluginsLoxoneExcludeRooms);
 
-            showHideSettings();
+                // TODO: maybe this would be better in the admin core?
+                function fillSelectEnums(id, type, values) {
+                    getEnums(type, function (err, enumsObject) {
+                        var opts = '';
+                        enumsList = Object.values(enumsObject);
+                        for (var lp = 0; lp < enumsList.length; lp++) {
+                            enumName = enumsList[lp].common.name;
+                            opts += '<option value="' + enumName + '" ' + (Array.isArray(values) && values.includes(enumName) ? 'selected' : '') + '>' + enumName + '</option>';
+                        }
+                        $(id).html(opts);
+                        if (isMaterialize) {
+                            $(id).select();
+                        }
+                    });
+                };
+                fillSelectEnums('#pluginsLoxoneExcludeFunctions', 'functions', settings.pluginsLoxoneExcludeFunctions);
+                fillSelectEnums('#pluginsLoxoneExcludeRooms', 'rooms', settings.pluginsLoxoneExcludeRooms);
 
-            // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-            if (M) M.updateTextFields();
-        }
-
-        function showHideSettings(id) {
-            // TODO: when we have multipled plugins find the enable boxes in a loop
-            if ($('#pluginsLoxoneEnabled').prop('checked')) {
-                $('.pluginsLoxone').show();
-            } else {
-                $('.pluginsLoxone').hide();
-            }
-        }
-
-        // This will be called by the admin adapter when the user presses the save button
-        function save(callback) {
-            // example: select elements with class=value and build settings object
-            var obj = {};
-            $('.value').each(function () {
-                var $this = $(this);
-                if ($this.attr('type') === 'checkbox') {
-                    obj[$this.attr('id')] = $this.prop('checked');
-                } else {
-                    obj[$this.attr('id')] = $this.val();
+                if (typeof getExtendableInstances !== 'undefined') {
+                    getExtendableInstances(function (result) {
+                        if (result) {
+                            var text = '';
+                            for (var lp = 0; lp < result.length; lp++) {
+                                var name = result[lp]._id.substring('system.adapter.'.length);
+                                text += '<option value="' + name + '">' + name + '</option>';
+                            }
+                            $('#webInstance').append(text).val(settings.webInstance).select();
+                        }
+                        showHideSettings();
+                        onChange(false);
+                    });
                 }
-            });
-            callback(obj);
-        }
-    </script>
 
-</head>
+                // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+                if (M) M.updateTextFields();
+            }
 
-<body>
+            function showHideSettings(id) {
+                // TODO: when we have multiple plugins find the enable boxes in a loop
+                if ($('#pluginsLoxoneEnabled').prop('checked')) {
+                    $('.pluginsLoxone').show();
+                } else {
+                    $('.pluginsLoxone').hide();
+                }
+            }
 
-    <div class="m adapter-container">
-        <div class="row">
+            // This will be called by the admin adapter when the user presses the save button
+            function save(callback) {
+                // example: select elements with class=value and build settings object
+                var obj = {};
+                $('.value').each(function () {
+                    var $this = $(this);
+                    if ($this.attr('type') === 'checkbox') {
+                        obj[$this.attr('id')] = $this.prop('checked');
+                    } else {
+                        obj[$this.attr('id')] = $this.val();
+                    }
+                });
+                callback(obj);
+            }
+        </script>
 
-            <div class="col s12">
-                <ul class="tabs">
-                    <li class="tab col s2"><a href="#tab-main" class="translate active">Main settings</a></li>
-                    <li class="tab col s2 plugins"><a href="#tab-plugins" class="translate">Plugins</a></li>
-                </ul>
-            </div>
+    </head>
 
-            <div id="tab-main" class="col s12 page">
-                <div class="row">
-                    <div class="col s6 m3 l2">
-                        <img src="google-smart-home-fulfillment.png" class="logo">
+    <body>
+
+        <div class="m adapter-container">
+            <div class="row">
+
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col s2"><a href="#tab-main" class="translate active">Main settings</a></li>
+                        <li class="tab col s2 plugins"><a href="#tab-plugins" class="translate">Plugins</a></li>
+                    </ul>
+                </div>
+
+                <div id="tab-main" class="col s12 page">
+                    <div class="row">
+                        <div class="col s6 m3 l2">
+                            <img src="google-smart-home-fulfillment.png" class="logo">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12 m3">
+                            <select class="value" id="webInstance">
+                                <option value="*" class="translate">all</option>
+                            </select>
+                            <label class="translate" for="webInstance">Extend WEB adapter:</label>
+                        </div>
+                        <div class="col s12 m3">
+                            <input size="5" maxlength="5" type="number" class="value" id="syncInterval" />
+                            <label class="translate" for="syncInterval">Periodically sync with Google (mins):</label>
+                        </div>
+                        <div class="col s12 m6 input-field">
+                            <input type="text" class="value" id="publicFQDN" />
+                            <label class="translate" for="publicFQDN">Public FQDN</label>
+                            <span class="translate">Your public FQDN or IP address. Requests to port 443 on this address must be received by this Adapter (or the extended Web Adapter), on the HTTPS port configured here. Usually achieved through port                            forwarding/firewall configuration.</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12 input-field">
+                            <input type="text" class="value" id="homeGraphJSONKey" />
+                            <label class="translate" for="homeGraphJSONKey">Google HomeGraph JSON Key</label>
+                            <span class="translate"><a
+                                    href="https://developers.google.com/assistant/smarthome/develop/report-state#service-account-key">Create
+                                    a Service Account Key</a> for your project and copy/paste the JSON here.</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12 m6 input-field">
+                            <input type="text" class="value" id="oauthClientId" />
+                            <label class="translate" for="oauthClientId">OAuth Client ID</label>
+                            <span class="translate">Client ID configured in the Account Linking section of your <a
+                                    href="https://console.actions.google.com/">Actions on Google Console</a>.</span>
+                        </div>
+                        <div class="col s12 m6 input-field">
+                            <input class="value" id="oauthClientSecret" type="password" />
+                            <label class="translate" for="oauthClientSecret">OAuth Client Secret</label>
+                            <span class="translate">Client Secret configured in the Account Linking section of your <a
+                                    href="https://console.actions.google.com/">Actions on Google Console</a>.</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col s12 m3 input-field">
-                        <input class="value" id="port" size="5" maxlength="5" type="number" />
-                        <label class="translate" for="port">Secure HTTPS Port</label>
+                <div id="tab-plugins" class="col s12 page">
+                    <div class="row">
+                        <div class="col s12 m3">
+                            <h6>Loxone</h6>
+                        </div>
+                        <div class="col s12 m3 input-field">
+                            <input class="value" id="pluginsLoxoneEnabled" type="checkbox" />
+                            <label class="translate" for="pluginsLoxoneEnabled">Enable</label>
+                        </div>
                     </div>
-                    <div class="col s12 m6 input-field">
-                        <input type="text" class="value" id="publicFQDN" />
-                        <label class="translate" for="publicFQDN">Public FQDN</label>
-                        <span class="translate">Your public FQDN or IP address. Requests to port 443 on this address
-                            must be
-                            received by this Adapter, on the HTTPS port configured here. Usually achieved through port
-                            forwarding/firewall configuration.</span>
+                    <div class="row pluginsLoxone">
+                        <div class="col s12 m4 input-field">
+                            <select id="pluginsLoxoneExcludeFunctions" class="value" multiple></select>
+                            <label class="translate" for="pluginsLoxoneExcludeFunctions">Exclude functions</label>
+                            <span>Devices having excluded functions will not be exposed to Google Home.</span>
+                        </div>
+                        <div class="col s12 m4 input-field">
+                            <select id="pluginsLoxoneExcludeRooms" class="value" multiple></select>
+                            <label class="translate" for="pluginsLoxoneExcludeRooms">Exclude rooms</label>
+                            <span>Devices in excluded rooms will not be exposed to Google Home.</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col s12 m4 input-field">
-                        <select id="certPublic" class="value"></select>
-                        <label class="translate" for="certPublic">Public certificate</label>
-                    </div>
-                    <div class="col s12 m4 input-field">
-                        <select id="certPrivate" class="value"></select>
-                        <label class="translate" for="certPrivate">Private certificate</label>
-                    </div>
-                    <div class="col s12 m4 input-field">
-                        <select id="certChained" class="value"></select>
-                        <label class="translate" for="certChained">Chained certificate</label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col s12 input-field">
-                        <input type="text" class="value" id="homeGraphJSONKey" />
-                        <label class="translate" for="homeGraphJSONKey">Google HomeGraph JSON Key</label>
-                        <span class="translate"><a
-                                href="https://developers.google.com/assistant/smarthome/develop/report-state#service-account-key">Create
-                                a Service Account Key</a> for your project and copy/paste the JSON here.</span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col s12 m6 input-field">
-                        <input type="text" class="value" id="oauthClientId" />
-                        <label class="translate" for="oauthClientId">OAuth Client ID</label>
-                        <span class="translate">Client ID configured in the Account Linking section of your <a
-                                href="https://console.actions.google.com/">Actions on Google Console</a>.</span>
-                    </div>
-                    <div class="col s12 m6 input-field">
-                        <input class="value" id="oauthClientSecret" type="password" />
-                        <label class="translate" for="oauthClientSecret">OAuth Client Secret</label>
-                        <span class="translate">Client Secret configured in the Account Linking section of your <a
-                                href="https://console.actions.google.com/">Actions on Google Console</a>.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div id="tab-plugins" class="col s12 page">
-                <div class="row">
-                    <div class="col s12 m3">
-                        <h6>Loxone</h6>
-                    </div>
-                    <div class="col s12 m3 input-field">
-                        <input class="value" id="pluginsLoxoneEnabled" type="checkbox" />
-                        <label class="translate" for="pluginsLoxoneEnabled">Enable</label>
-                    </div>
-                </div>
-                <div class="row pluginsLoxone">
-                    <div class="col s12 m4 input-field">
-                        <select id="pluginsLoxoneExcludeFunctions" class="value" multiple></select>
-                        <label class="translate" for="pluginsLoxoneExcludeFunctions">Exclude functions</label>
-                        <span>Devices having excluded functions will not be exposed to Google Home.</span>
-                    </div>
-                    <div class="col s12 m4 input-field">
-                        <select id="pluginsLoxoneExcludeRooms" class="value" multiple></select>
-                        <label class="translate" for="pluginsLoxoneExcludeRooms">Exclude rooms</label>
-                        <span>Devices in excluded rooms will not be exposed to Google Home.</span>
-                    </div>
-                </div>
-
-                <div class="row pluginsLoxone">
-                    <div class="col s12 m12 input-field">
-                        <input class="value" id="pluginsLoxoneSceneReversible" type="checkbox" />
-                        <label class="translate" for="pluginsLoxoneSceneReversible">Reversible scenes</label>
-                        <span class="translate">If checked, requesting a lighting scene mixes that scene in and thus a
-                            request to deactivate can be made to mix a scene out. If left unchecked scene requests
-                            result in
-                            only that scene being activated.</span>
+                    <div class="row pluginsLoxone">
+                        <div class="col s12 m12 input-field">
+                            <input class="value" id="pluginsLoxoneSceneReversible" type="checkbox" />
+                            <label class="translate" for="pluginsLoxoneSceneReversible">Reversible scenes</label>
+                            <span class="translate">If checked, requesting a lighting scene mixes that scene in and thus a
+                                request to deactivate can be made to mix a scene out. If left unchecked scene requests
+                                result in only that scene being activated.</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-</body>
-
+    </body>
 </html>
