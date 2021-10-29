@@ -1,6 +1,6 @@
 {
   "name": "iobroker.google-smart-home-fulfillment",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Google Smart Home Actions fulfillment server for ioBroker.",
   "author": "Robin Rainton <robin@rainton.com>",
   "homepage": "https://github.com/raintonr/ioBroker.google-smart-home-fulfillment",
