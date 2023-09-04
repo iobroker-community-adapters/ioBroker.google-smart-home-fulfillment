@@ -1,13 +1,11 @@
 ![Logo](admin/google-smart-home-fulfillment.png)
 # ioBroker.google-smart-home-fulfillment
 
-[![NPM version](http://img.shields.io/npm/v/iobroker.google-smart-home-fulfillment.svg)](https://www.npmjs.com/package/iobroker.google-smart-home-fulfillment)
+[![NPM version](https://img.shields.io/npm/v/iobroker.google-smart-home-fulfillment.svg)](https://www.npmjs.com/package/iobroker.google-smart-home-fulfillment)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.google-smart-home-fulfillment.svg)](https://www.npmjs.com/package/iobroker.google-smart-home-fulfillment)
-![Number of Installations (latest)](http://iobroker.live/badges/google-smart-home-fulfillment-installed.svg)
-![Number of Installations (stable)](http://iobroker.live/badges/google-smart-home-fulfillment-stable.svg)
-[![Dependency Status](https://img.shields.io/david/raintonr/iobroker.google-smart-home-fulfillment.svg)](https://david-dm.org/raintonr/iobroker.google-smart-home-fulfillment)
+![Number of Installations (latest)](https://iobroker.live/badges/google-smart-home-fulfillment-installed.svg)
+![Number of Installations (stable)](https://iobroker.live/badges/google-smart-home-fulfillment-stable.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/raintonr/ioBroker.google-smart-home-fulfillment/badge.svg)](https://snyk.io/test/github/raintonr/ioBroker.google-smart-home-fulfillment)
-[![Tests](https://travis-ci.org/raintonr/ioBroker.legrand-ecocompteur.svg?branch=master)](https://travis-ci.org/raintonr/ioBroker.google-smart-home-fulfillment)
 
 [![NPM](https://nodei.co/npm/iobroker.google-smart-home-fulfillment.png?downloads=true)](https://nodei.co/npm/iobroker.google-smart-home-fulfillment/)
 
@@ -119,8 +117,17 @@ https://console.cloud.google.com/apis/api/homegraph.googleapis.com/overview
 
 ## Changelog
 
+<!--
+  Placeholder for the next version (at the beginning of the line):
+  ### **WORK IN PROGRESS**
+-->
+
+### **WORK IN PROGRESS**
+
+* Update dependencies.
+
 ### 0.0.1
-* (Robin Rainton) initial release
+* (Robin Rainton) initial release.
 
 ## License
 MIT License
