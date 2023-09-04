@@ -47,6 +47,7 @@
         "keywords": [
             "Google Home",
             "Google Assistant",
+            "Loxone",
             "voice"
         ],
         "license": "MIT",
@@ -60,16 +61,33 @@
         "mode": "daemon",
         "type": "iot-systems",
         "compact": true,
-        "connectionType": "local",
+        "connectionType": "cloud",
         "dataSource": "push",
-        "materialize": true,
+        "adminUI": {
+            "config": "json"
+        },
         "dependencies": [
             {
                 "js-controller": ">=5.0.0"
             }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=6.4.0"
+            }
         ]
     },
-    "native": {},
+    "native": {
+        "publicFQDN": "",
+        "port": 0,
+        "bind": "",
+        "useSsl": false,
+        "homeGraphJSONKey": "",
+        "oauthClientId": "",
+        "oauthClientSecret": "",
+        "pluginsLoxoneEnabled": false,
+        "pluginsLoxoneSceneReversible": false
+    },
     "objects": [],
     "instanceObjects": []
 }

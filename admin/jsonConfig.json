@@ -1,0 +1,123 @@
+{
+    "type": "tabs",
+    "items": {
+        "mainTab": {
+            "type": "panel",
+            "label": "Main Settings",
+            "items": {
+                "publicFQDN": {
+                    "newLine": true,
+                    "type": "text",
+                    "label": "Public FQDN",
+                    "help": "Your public FQDN or IP address. Requests to port 443 on this address must be received by this Adapter on the address/port configured below. Usually achieved through port forwarding/firewall configuration.",
+                    "sm": 12,
+                    "validator": "data.publicFQDN",
+                    "validatorErrorText": "Public FQDN must be specified",
+                    "validatorNoSaveOnError": true
+                },
+                "port": {
+                    "newLine": true,
+                    "type": "port",
+                    "min": 1,
+                    "max": 65565,
+                    "label": "Listen port",
+                    "help": "Connections from the Internet to port 443 of FQDN must arrive here.<br/>Setup your firewall/port forwarding appropriately.",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "validator": "data.port",
+                    "validatorErrorText": "Listen port is mandatory",
+                    "validatorNoSaveOnError": true
+                },
+                "bind": {
+                    "type": "ip",
+                    "label": "Listen address",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "listenOnAllPorts": true,
+                    "validator": "data.bind",
+                    "validatorErrorText": "Listen address is mandatory",
+                    "validatorNoSaveOnError": true
+                },
+                "useSsl": {
+                    "newLine": true,
+                    "type": "checkbox",
+                    "label": "Use ioBroker SSL certificates",
+                    "help": "If traffic is arriving from the Internet via port forwarding then this must be checked and a certificate appropriate for public FQDN must be available. Use the ACME adapter to generate one automatically.<br/>If a reverse proxy with SSL offloading is in use then SSL is not mandatory.",
+                    "sm": 12
+                },
+                "homeGraphJSONKey": {
+                    "newLine": true,
+                    "type": "text",
+                    "label": "Google HomeGraph JSON Key",
+                    "help": "<a href=\"https://developers.google.com/assistant/smarthome/develop/report-state#service-account-key\">Create a Service Account Key</a> for your project and copy/paste the JSON here.",
+                    "sm": 12,
+                    "validator": "data.homeGraphJSONKey",
+                    "validatorErrorText": "Google HomeGraph JSON Key must be specified",
+                    "validatorNoSaveOnError": true
+                },
+                "oauthClientId": {
+                    "newLine": true,
+                    "type": "text",
+                    "label": "OAuth Client ID",
+                    "help": "Client ID configured in the Account Linking section of your <a href=\"https://console.actions.google.com/\">Actions on Google Console</a>.",
+                    "sm": 12,
+                    "validator": "data.oauthClientId",
+                    "validatorErrorText": "OAuth Client ID must be specified",
+                    "validatorNoSaveOnError": true
+                },
+                "oauthClientSecret": {
+                    "newLine": true,
+                    "type": "text",
+                    "label": "OAuth Client Secret",
+                    "help": "Client Secret configured in the Account Linking section of your <a href=\"https://console.actions.google.com/\">Actions on Google Console</a>.",
+                    "sm": 12,
+                    "validator": "data.oauthClientSecret",
+                    "validatorErrorText": "OAuth Client Secret must be specified",
+                    "validatorNoSaveOnError": true
+                }
+            }
+        },
+        "pluginsTab": {
+            "type": "panel",
+            "label": "Plugins",
+            "items": {
+                "loxone": {
+                    "newLine": true,
+                    "type": "header",
+                    "size": 1,
+                    "text": "Loxone",
+                    "sm": 12
+                },
+                "pluginsLoxoneEnabled": {
+                    "newLine": true,
+                    "type": "checkbox",
+                    "label": "Enable",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4
+                },
+                "_toDo": {
+                    "newLine": true,
+                    "type": "header",
+                    "size": 2,
+                    "text": "Rooms & functions",
+                    "help": "pluginsLoxoneExcludeFunctions & pluginsLoxoneExcludeRooms",
+                    "sm": 12,
+                    "hidden": "!data.pluginsLoxoneEnabled"
+                },
+                "pluginsLoxoneSceneReversible": {
+                    "newLine": true,
+                    "type": "checkbox",
+                    "label": "Reversible scenes",
+                    "help": "If checked, requesting a lighting scene mixes that scene in and thus a request to deactivate can be made to mix a scene out. If left unchecked scene requests result in only that scene being activated.",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "hidden": "!data.pluginsLoxoneEnabled"
+                }
+            }
+        }
+    }
+}
