@@ -86,6 +86,8 @@
         "oauthClientId": "",
         "oauthClientSecret": "",
         "pluginsLoxoneEnabled": false,
+        "pluginsLoxoneExcludeFunctions": [],
+        "pluginsLoxoneExcludeRooms": [],
         "pluginsLoxoneSceneReversible": false
     },
     "objects": [],

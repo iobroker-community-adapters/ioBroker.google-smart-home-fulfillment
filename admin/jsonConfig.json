@@ -21,7 +21,7 @@
                     "min": 1,
                     "max": 65565,
                     "label": "Listen port",
-                    "help": "Connections from the Internet to port 443 of FQDN must arrive here.<br/>Setup your firewall/port forwarding appropriately.",
+                    "help": "Connections from the Internet to port 443 of FQDN must arrive here.<br/>Setup your firewall/port forwarding/proxy appropriately.",
                     "sm": 12,
                     "md": 6,
                     "lg": 4,
@@ -44,7 +44,7 @@
                     "newLine": true,
                     "type": "checkbox",
                     "label": "Use ioBroker SSL certificates",
-                    "help": "If traffic is arriving from the Internet via port forwarding then this must be checked and a certificate appropriate for public FQDN must be available. Use the ACME adapter to generate one automatically.<br/>If a reverse proxy with SSL offloading is in use then SSL is not mandatory.",
+                    "help": "If traffic is arriving from the Internet via port forwarding then this must be checked and a certificate appropriate for public FQDN must be available. Use the ACME adapter to generate one automatically.<br/>If a reverse proxy with SSL offloading is in use then SSL is not mandatory, but if checked a certificate collection matching the request host must exist.",
                     "sm": 12
                 },
                 "homeGraphJSONKey": {
@@ -83,28 +83,37 @@
             "type": "panel",
             "label": "Plugins",
             "items": {
-                "loxone": {
-                    "newLine": true,
-                    "type": "header",
-                    "size": 1,
-                    "text": "Loxone",
-                    "sm": 12
+                "_": {
+                    "type": "staticText",
+                    "text": "Enable each plugin for which you would like the related ioBroker states to be exposed in Google Home."
                 },
                 "pluginsLoxoneEnabled": {
                     "newLine": true,
                     "type": "checkbox",
-                    "label": "Enable",
+                    "label": "Loxone",
                     "sm": 12,
                     "md": 6,
                     "lg": 4
                 },
-                "_toDo": {
+                "pluginsLoxoneExcludeFunctions": {
                     "newLine": true,
-                    "type": "header",
-                    "size": 2,
-                    "text": "Rooms & functions",
-                    "help": "pluginsLoxoneExcludeFunctions & pluginsLoxoneExcludeRooms",
+                    "type": "func",
+                    "multiple": true,
+                    "label": "Exclude functions",
+                    "help": "Devices having excluded functions will not be exposed to Google Home.",
                     "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "hidden": "!data.pluginsLoxoneEnabled"
+                },
+                "pluginsLoxoneExcludeRooms": {
+                    "type": "room",
+                    "label": "Exclude rooms",
+                    "multiple": true,
+                    "help": "Devices in excluded rooms will not be exposed to Google Home.",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
                     "hidden": "!data.pluginsLoxoneEnabled"
                 },
                 "pluginsLoxoneSceneReversible": {
@@ -113,8 +122,6 @@
                     "label": "Reversible scenes",
                     "help": "If checked, requesting a lighting scene mixes that scene in and thus a request to deactivate can be made to mix a scene out. If left unchecked scene requests result in only that scene being activated.",
                     "sm": 12,
-                    "md": 6,
-                    "lg": 4,
                     "hidden": "!data.pluginsLoxoneEnabled"
                 }
             }
