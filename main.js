@@ -55,7 +55,8 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
 
             const webServer = new WebServer({ app, adapter: this, secure: this.config.useSsl });
             const server = await webServer.init();
-            server.listen(this.config.port);
+            server.listen(this.config.port, this.config.bind);
+            this.log.debug(`${this.config.useSsl ? 'Secure s' : 'S'}erver listening on ${this.config.bind}:${this.config.port}`);
 
             // Slightly odd require here but this is so the main code is compatible with possible
             // use as an ioBroker.web extension (well - that's how it started out anyhow).
