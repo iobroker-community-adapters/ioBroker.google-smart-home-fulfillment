@@ -8,8 +8,7 @@
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
 
-// Load your modules here, e.g.:
-// const fs = require("fs");
+const { WebServer } = require('@iobroker/webserver');
 
 class GoogleSmartHomeFulfillment extends utils.Adapter {
 
@@ -33,10 +32,6 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
      */
 
     async onReady() {
-        if (this.config.webInstance) {
-            this.terminate('Adapter configured to run as a part of web service');
-        }
-
         // Construct more config from that given
         let configPass = false;
         try {
@@ -54,13 +49,13 @@ class GoogleSmartHomeFulfillment extends utils.Adapter {
         }
 
         if (configPass) {
-            // Create secure ExpressJS server
+            // Create ExpressJS server
             const express = require('express');
-            const https = require('https');
             const app = express();
 
-            const certificates = await this.getCertificatesAsync(this.config.certPublic, this.config.certPrivate, this.config.certChained);
-            const server = https.createServer(certificates[0], app).listen(this.config.port);
+            const webServer = new WebServer({ app, adapter: this, secure: this.config.useSsl });
+            const server = await webServer.init();
+            server.listen(this.config.port);
 
             // Slightly odd require here but this is so the main code is compatible with possible
             // use as an ioBroker.web extension (well - that's how it started out anyhow).
