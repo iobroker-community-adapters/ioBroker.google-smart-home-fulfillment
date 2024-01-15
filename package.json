@@ -21,7 +21,7 @@
     "await-semaphore": "*",
     "actions-on-google": "2.13.0",
     "@iobroker/adapter-core": "^2.4.0",
-    "oidc-provider": "6.31.1",
+    "oidc-provider": "8.4.4",
     "jose": "^2.0.5",
     "randomstring": "*",
     "set-interval-async": "*"
