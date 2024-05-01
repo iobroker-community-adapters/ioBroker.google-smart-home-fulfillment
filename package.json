@@ -27,7 +27,7 @@
     "set-interval-async": "*"
   },
   "devDependencies": {
-    "@iobroker/testing": "^2.3.0",
+    "@iobroker/testing": "^4.1.3",
     "@types/chai": "^4.2.14",
     "@types/chai-as-promised": "^7.1.8",
     "@types/gulp": "^4.0.17",
